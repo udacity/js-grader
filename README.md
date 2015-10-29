@@ -16,7 +16,7 @@ Teachers also make decisions while they grade. Based on the student's choices, t
 
 Most importantly, **great teachers provide as much feedback as possible**. Teachers congratulate students on their successes and point them in the right direction when their understanding strays.
 
-The grader exists to provide easy branching, checkpoint and feedback logic so you can easily grade student work the same way that classroom teachers grade their students.
+The grader exists to provide easy branching, checkpoint and feedback logic so you can easily grade student work the same way that classroom teachers grade.
 
 See the [tips and tricks](#tips-n-tricks) section for grading strategies.
 
@@ -55,7 +55,7 @@ feedback = {
 }
 ```
 
-`wrongMessage` is mandatory and displayed if the test fails. `comment` is optional and displayed if the test passes. You can set the optional `category` equal to a category set in the Grader constructor in order to use a general message as feedback for a failing test.
+`wrongMessage` is mandatory and displayed if the test fails. `comment` is optional and displayed if the test passes. You can set the optional `category` equal to a category set in the Grader constructor if you want to use a general message as feedback for a failing test. If you have both a `category` and a `wrongMessage`, both will be displayed if a test fails.
 
 If you want the grader to stop grading when a test fails, set `keepGoing` to `false`. It defaults to `true`.
 
@@ -97,7 +97,7 @@ result = {
 
 All of the tests must have passed in order for `isCorrect` to be `true`.
 
-As mentioned earlier, tests execute in an asynchronous queue. Set an `onresult` handler to be called when the queue empties, whether it's because all of the tests executed or the queue was stopped at a checkpoint.
+As mentioned earlier, tests execute in either a synchronous or asynchronous queue. Set an `onresult` handler to be called when the queue empties, whether it's because all of the tests executed or the queue was stopped at a checkpoint.
 
 ### <a name="helpers"></a> Helper Functions
 
@@ -141,9 +141,11 @@ grader.isSet(value any);
 
 Just checks to make sure the value is not `undefined`.
 
+---
+
 #### For HTML/CSS
 
-For these methods, assume that `elem` can be either a jQuery element, regular DOM node, or a string selector unless specified otherwise.
+For these methods, assume that `elem` can be either a jQuery element, regular DOM node, or a string selector unless otherwise specified.
 
 ---
 
@@ -280,5 +282,6 @@ Packages up all test feedback to send to grading code. Use with programming quiz
 
 * Remember, this is just a library. You're writing code, so use whatever logic and constructs you'd like to determine how tests get added, when tests get added, and what kind of feedback students should receive.
 * Are there multiple ideas you want to grade independently? Just instantiate multiple Graders! Just make sure you aggregate the feedback before sending it off to grading code.
+* Don't be afraid to set `keepGoing` to `false`. Checkpoints exist to help you run tests only when the conditions in the testing environment are correct. This also helps you provide targeted, focused feedback that addresses the current state of the student's code.
 * Want to create an optional question? Use if/else logic to decide when to add a test and make sure the test returns true!
 * A Grader hasn't disappeared after its queue empties. You can add more tests and run again! (Only for synchronous tests.)
