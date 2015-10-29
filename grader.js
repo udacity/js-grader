@@ -393,24 +393,33 @@ var Grader = (function() {
 
     isjQuery: function (elem) {
       // could use obj.jquery, which will only return true if it is a jquery object
-      if (elem instanceof $) return true;
-      return false;
+      var isjQ = false;
+      if (elem instanceof $) {
+        isjQ = true;
+      }
+      return isjQ;
     },
 
     hasCorrectTag: function (elem, tag) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (elem.is(tag)) return true;
-      return false;
+      var hasTag = false;
+      if (elem.is(tag)) {
+        hasTag = true;
+      }
+      return hasTag;
     },
 
     hasCorrectClass: function (elem, className) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (elem.hasClass(className)) return true;
-      return false;
+      var hasClass = false;
+      if (elem.hasClass(className)) {
+        hasClass = true;
+      }
+      return hasClass;
     },
 
     hasCorrectId: function (elem, id) {
@@ -422,12 +431,15 @@ var Grader = (function() {
     },
 
     hasCorrectText: function (elem, text) {
-      // TODO: modify to point out specific changes?
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (elem.text() === text) return true;
-      return false;
+      var hasText = false;
+      var re = new RegExp(text);
+      if (elem.text().match(re).length > 0) {
+        hasText = true;
+      }
+      return hasText;
     },
 
     hasAttr: function (elem, attrName, correctAttr) {
@@ -447,42 +459,46 @@ var Grader = (function() {
       if (!this.isjQuery(elems)) {
         elems = $(elems);
       }
+      var correctLength = false;
       var cLength = elems.length;
-      if (cLength === _length) return true;
-      return false;
+      if (cLength === _length) {
+        correctLength = true;
+      }
+      return correctLength;
     },
 
     isCorrectElem: function (elem, correctElem) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (elem.is(correctElem)) return true;
-      return false;
+      var is = false;
+      if (elem.is(correctElem)) {
+        is = true;
+      }
+      return is;
     },
 
     isCorrectCollection: function (collection, correctCollection) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (collection.is(correctCollection)) return true;
-      return false;
+      var is = false;
+      if (collection.is(correctCollection)) {
+        is = true;
+      }
+      return is;
     },
 
-    hasCorrectStyle: function (elem, _style, _correctStyle) {
+    hasCorrectStyle: function (elem, cssProperty, _correctStyle) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      var currentStyle = elem.css(_style);
-      if (currentStyle  === _correctStyle) return true;
-      return false;
-    },
-
-    hasCalledFunction: function (func) {
-      var hasCalledFunction = false;
-      $("script:contains(." + func + ")").each(function() {
-        if ($(this).text().search("For this quiz") !== -1 && $(this).text().search("returns true if") === -1) hasCalledFunction = true;
-      });
-      return hasCalledFunction;
+      var hasCorrectStyle = false;
+      var currentStyle = elem.css(cssProperty);
+      if (currentStyle  === _correctStyle) {
+        hasCorrectStyle = true;
+      }
+      return hasCorrectStyle;
     },
 
     doesExistInParent: function (elem, parentElem) {
@@ -492,16 +508,22 @@ var Grader = (function() {
       if (!this.isjQuery(parentElem)) {
         parentElem = $(parentElem);
       }
-      if (parentElem.find(elem).length > 0) return true;
-      return false;
+      var inParent = false;
+      if (parentElem.find(elem).length > 0) {
+        inParent = true;
+      }
+      return inParent;
     },
 
-    doesExist: function (elem) {
+    elemDoesExist: function (elem) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
-      if (elem.length > 0) return true;
-      return false;
+      var exists = false;
+      if (elem.length > 0) {
+        exists = true;
+      }
+      return exists;
     },
 
     areSiblings: function (elem1, elem2) {
@@ -511,8 +533,11 @@ var Grader = (function() {
       if (!this.isjQuery(elem2)) {
         elem2 = $(elem2);
       }
-      if (elem1.siblings(elem2).length > 0) return true;
-      return false;
+      var siblingLove = false;
+      if (elem1.siblings(elem2).length > 0) {
+        siblingLove = true;
+      }
+      return siblingLove;
     },
 
     isImmediateChild: function (elem, parentElem) {
