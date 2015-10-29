@@ -164,30 +164,45 @@ var Grader = (function() {
         return new Promise(function (resolve, reject) {
           if (fn) {
             try {
-              var ret = fn();
+              var result = fn();
             } catch (e) {
               self.clear();
               console.log(e);
             }
           }
-          resolve(ret);
+          resolve(result);
         });
-      }
+      };
+
+      function takeNextStep (test, result) {
+        test.isCorrect = result;
+          
+        self.registerResults(test);
+
+        if (test.isCorrect || test.keepGoing || self.alwaysGo) {
+          self.step();
+        } else {
+          self.clear();
+        }
+      };
 
       if (this.flushing) {
         var test = this.gradingSteps.shift();
         
-        executeInPromise(test.callback).then(function (resolve) {
-          test.isCorrect = resolve;
-          
-          self.registerResults(test);
-
-          if (test.isCorrect || test.keepGoing || self.alwaysGo) {
-            self.step();
-          } else {
-            self.clear();
+        if (this.grader.async) {
+          executeInPromise(test.callback).then(function (resolve) {
+            takeNextStep(test, resolve);
+          });
+        } else if (!this.grader.async) {
+          try {
+            var result = test.callback();
+          } catch (e) {
+            console.log(e);
+            throw new Error();
           }
-        });
+          takeNextStep(test, result);
+        }
+
       }
     },
 
@@ -196,17 +211,37 @@ var Grader = (function() {
     }
   };
 
-  function Grader (categoryMessages) {
+  function Grader (type, categoryMessages) {
     var self = this;
-
     this.specificFeedback = [];
     this.comments = [];
     this.isCorrect = false;
     this.correctHasChanged = false;
     this.queue = new Queue(self);
-    this.categoryMessages = categoryMessages || null;
+    this.async = false;
+    this.categoryMessages = null;
     this.generalFeedback = [];
     this.onresult = function () {};
+
+    for (n in arguments) {
+      switch (typeof arguments[n]) {
+        case 'string':
+          if (arguments[n] === 'async') {
+            this.async = true;
+          } else if (arguments[n] === 'sync') {
+            this.async = false;
+          } else {
+            throw new Error("Invalid type argument in Grader constructor");
+          }
+          break;
+        case 'object':
+          this.categoryMessages = arguments[n];
+          break;
+        default:
+          throw new TypeError("Invalid argument in Grader constructor");
+          break;
+      }
+    }
   };
 
   Grader.prototype = {

@@ -15,14 +15,14 @@
 	</script>
 	<script src="../grader.js"></script>
 	<script>
-		var grader = new Grader({
-			"generalWrong": "general wrong message"
+		var grader = new Grader('async', {
+			"generalWrong": "general wrong message - you see this"
 		});
 
 		grader.addTest(function () {
 			return grader.isSet(testString1);
 		}, {
-			comment: "test 1 should be right",
+			comment: "test 1 should be right - you see this",
 			wrongMessage: "you shouldn't see this message"
 		});
 
@@ -30,13 +30,14 @@
 			return grader.isType(testString1, 'number');
 		}, {
 			comment: "you shouldn't see this message",
-			wrongMessage: "test 2 should be wrong"
+			wrongMessage: "test 2 should be wrong - you see this"
 		});
 
 		grader.addTest(function () {
 			return grader.isInstance(testArray, Array);
 		}, {
-			wrongMessage: "test 3 should be right"
+			comment: "test 3 is right - you see this",
+			wrongMessage: "you shouldn't see this"
 		});
 
 		grader.addTest(function () {
@@ -48,6 +49,7 @@
 		grader.addTest(function () {
 			return grader.isInRange(2,3,4);
 		}, {
+			comment: "test 5 is right  - you see this",
 			wrongMessage: "you shouldn't see this message"
 		});
 
