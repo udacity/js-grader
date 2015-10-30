@@ -436,7 +436,7 @@ var Grader = (function() {
       }
       var hasText = false;
       var re = new RegExp(text);
-      if (elem.text().match(re).length > 0) {
+      if (elem.text().match(re)) {
         hasText = true;
       }
       return hasText;
