@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Test Page</title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+</head>
+<body>
+	<div class="output1"></div>
+	<script>
+		var testString1 = "this is a string";
+		var testString2 = "this is a different string";
+		var testNumber = 1;
+		var testArray = [1,2,3,4,5];
+	</script>
+	<script src="../grader.js"></script>
+	<script>
+		var grader = new Grader('async', {
+			"generalWrong": "general wrong message - you see this"
+		});
+
+		grader.addTest(function () {
+			return grader.isSet(testString1);
+		}, {
+			comment: "test 1 should be right - you see this",
+			wrongMessage: "you shouldn't see this message"
+		});
+
+		grader.addTest(function () {
+			return grader.isType(testString1, 'number');
+		}, {
+			comment: "you shouldn't see this message",
+			wrongMessage: "test 2 should be wrong - you see this"
+		});
+
+		grader.addTest(function () {
+			return grader.isInstance(testArray, Array);
+		}, {
+			comment: "test 3 is right - you see this",
+			wrongMessage: "you shouldn't see this"
+		});
+
+		grader.addTest(function () {
+			return testArray === testNumber;
+		}, {
+			category: "generalWrong"
+		}, false);
+
+		grader.addTest(function () {
+			return grader.isInRange(2,3,4);
+		}, {
+			comment: "test 5 is right  - you see this",
+			wrongMessage: "you shouldn't see this message"
+		});
+
+		grader.onresult = report;
+
+		grader.runTests();
+
+		function report (result) {
+			$('.output1').html("Result is: " + JSON.stringify(result));
+		};
+
+	</script>
+</body>
+</html>
