@@ -244,6 +244,14 @@ var Grader = (function() {
     }
   };
 
+  Object.defineProperties(Grader, {
+    is_correct: {
+      get: function() {
+        return this.isCorrect;
+      }
+    }
+  });
+
   Grader.prototype = {
     addTest: function(callback, messages, keepGoing) {
       this.queue.add(callback, messages, keepGoing);
