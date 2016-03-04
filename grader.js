@@ -244,7 +244,8 @@ var Grader = (function() {
     }
   };
 
-  Object.defineProperties(Grader, {
+  Object.defineProperties(Grader.prototype, {
+    // sometimes used instead of isCorrect
     is_correct: {
       get: function() {
         return this.isCorrect;
@@ -577,11 +578,6 @@ var Grader = (function() {
     },
 
     sendResultsToExecutor: function(o) {
-      if (o.is_correct === undefined) { throw new TypeError('Needs `is_correct`.') }
-      if (!o.test_feedback) { throw new TypeError('Needs `test_feedback`.') }
-      if (!o.test_comments) { throw new TypeError('Needs `test_comments`.') }
-      if (!o.congrats) { throw new TypeError('Needs `congrats`.') }
-
       var output = JSON.stringify(o);
       console.info("UDACITY_RESULT:" + output);
     }
