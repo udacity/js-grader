@@ -1,10 +1,10 @@
 var Grader = (function() {
 
   // http://stackoverflow.com/questions/1068834/object-comparison-in-javascript?lq=1
-  functiondeepCompare () {
+  function deepCompare () {
     var i, l, leftChain, rightChain;
 
-    functioncompare2Objects (x, y) {
+    function compare2Objects (x, y) {
       var p;
 
       // remember that NaN === NaN returns false
@@ -114,7 +114,7 @@ var Grader = (function() {
     return true;
   }
 
-  functionQueue (grader) {
+  function Queue (grader) {
     this.grader = grader;
     this.gradingSteps = [];
     this.flushing = false;
@@ -160,7 +160,7 @@ var Grader = (function() {
         this.clear();
       }
 
-      functionexecuteInPromise (fn) {
+      function executeInPromise (fn) {
         return new Promise(function(resolve, reject) {
           if (fn) {
             try {
@@ -174,7 +174,7 @@ var Grader = (function() {
         });
       };
 
-      functiontakeNextStep (test, result) {
+      function takeNextStep (test, result) {
         test.isCorrect = result;
           
         self.registerResults(test);
@@ -211,7 +211,7 @@ var Grader = (function() {
     }
   };
 
-  functionGrader (type, categoryMessages) {
+  function Grader (type, categoryMessages) {
     var self = this;
     this.specificFeedback = [];
     this.comments = [];
