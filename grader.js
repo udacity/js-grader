@@ -506,10 +506,48 @@ var Grader = (function() {
       }
       var hasCorrectStyle = false;
       var currentStyle = elem.css(cssProperty);
-      if (currentStyle  === _correctStyle) {
+      if (currentStyle === _correctStyle) {
         hasCorrectStyle = true;
       }
       return hasCorrectStyle;
+    },
+
+    propertyIsLessThan : function (elem, cssProperty, value) {
+      if (!this.isjQuery(elem)) {
+        elem = $(elem);
+      }
+      var is = false;
+      if (elem.css(cssProperty) < value) {
+      	is = true;
+      }
+      return is;      	
+    },
+
+    propertyIsGreaterThan : function (elem, cssProperty, value) {
+      if (!this.isjQuery(elem)) {
+        elem = $(elem);
+      }
+      var is = false;
+      if (elem.css(cssProperty) > value) {
+      	is = true;
+      }
+      return is;      	
+    },
+
+    doesPropertyMatch : function (elem, _style, validStyles) {
+      if (!this.isjQuery(elem)) {
+        elem = $(elem);
+      }
+      var doesPropertyMatch = false;
+      var currentStyle = elem.css(_style).toLowerCase();
+      for (var i = 0; i < validStyles.length; i++) {
+        var re = new RegExp(validStyles[i]);
+        var found = re.test(currentStyle);
+        if(found) {
+          doesPropertyMatch = true;
+        }
+      }
+      return doesPropertyMatch;
     },
 
     doesExistInParent: function (elem, parentElem) {

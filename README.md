@@ -190,6 +190,22 @@ This test pulls a CSS property from an element and compares the style to the `co
 ---
 
 ```javascript
+grader.propertyIsLessThan(elem, cssProperty string, value int);
+```
+
+This test pulls a CSS property from an element and tests to see if the value of the property is less than the value specified.
+
+---
+
+```javascript
+grader.propertyIsGreaterThan(elem, cssProperty string, value int);
+```
+
+This test pulls a CSS property from an element and tests to see if the value of the property is greater than than the value specified.
+
+---
+
+```javascript
 grader.hasCorrectText(elem, text regex);
 ```
 
