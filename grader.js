@@ -505,10 +505,16 @@ var Grader = (function() {
         elem = $(elem);
       }
       var hasCorrectStyle = false;
-      var currentStyle = elem.css(cssProperty);
-      if (currentStyle === _correctStyle) {
-        hasCorrectStyle = true;
+      /* if one style is passed, convert to array */
+      if (typeof _correctStyle === 'string') {
+      	_correctStyle = [_correctStyle];
       }
+      var currentStyle = elem.css(cssProperty);
+      for (var i = 0; i < _correctStyle.length; i++) {
+          if (currentStyle === _correctStyle[i]) {
+            hasCorrectStyle = true;
+          }
+       }
       return hasCorrectStyle;
     },
 
@@ -518,7 +524,7 @@ var Grader = (function() {
       }
       var is = false;
       if (elem.css(cssProperty) < value) {
-      	is = true;
+        is = true;
       }
       return is;      	
     },
@@ -529,25 +535,9 @@ var Grader = (function() {
       }
       var is = false;
       if (elem.css(cssProperty) > value) {
-      	is = true;
+        is = true;
       }
       return is;      	
-    },
-
-    doesPropertyMatch : function (elem, _style, validStyles) {
-      if (!this.isjQuery(elem)) {
-        elem = $(elem);
-      }
-      var doesPropertyMatch = false;
-      var currentStyle = elem.css(_style).toLowerCase();
-      for (var i = 0; i < validStyles.length; i++) {
-        var re = new RegExp(validStyles[i]);
-        var found = re.test(currentStyle);
-        if(found) {
-          doesPropertyMatch = true;
-        }
-      }
-      return doesPropertyMatch;
     },
 
     doesExistInParent: function (elem, parentElem) {

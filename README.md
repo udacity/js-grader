@@ -182,10 +182,10 @@ This is called `hasAttr` and not `hasCorrectAttr` because the "correct" aspect i
 ---
 
 ```javascript
-grader.hasCorrectStyle(elem, cssProperty string, correctStyle string);
+grader.hasCorrectStyle(elem, cssProperty string, [correctStyle string]);
 ```
 
-This test pulls a CSS property from an element and compares the style to the `correctStyle`.
+This test pulls a CSS property from an element and compares the style to one or more `correctStyle`.
 
 ---
 
