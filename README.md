@@ -193,7 +193,7 @@ This test pulls a CSS property from an element and compares the style to one or 
 grader.propertyIsLessThan(elem, cssProperty string, value int);
 ```
 
-This test pulls a CSS property from an element and tests to see if the value of the property is less than the value specified.
+This test pulls a CSS property from an element and tests to see if the value of the property is less than the `value` specified.
 
 ---
 
@@ -201,7 +201,7 @@ This test pulls a CSS property from an element and tests to see if the value of 
 grader.propertyIsGreaterThan(elem, cssProperty string, value int);
 ```
 
-This test pulls a CSS property from an element and tests to see if the value of the property is greater than the value specified.
+This test pulls a CSS property from an element and tests to see if the value of the property is greater than the `value` specified.
 
 ---
 
