@@ -503,14 +503,42 @@ var Grader = (function() {
         elem = $(elem);
       }
       var hasCorrectStyle = false;
-      var currentStyle = elem.css(cssProperty);
-      if (currentStyle  === _correctStyle) {
-        hasCorrectStyle = true;
+      /* if one style is passed, convert to array */
+      if (typeof _correctStyle === 'string') {
+      	_correctStyle = [_correctStyle];
       }
+      var currentStyle = elem.css(cssProperty);
+      for (var i = 0; i < _correctStyle.length; i++) {
+          if (currentStyle === _correctStyle[i]) {
+            hasCorrectStyle = true;
+          }
+       }
       return hasCorrectStyle;
     },
 
-    doesExistInParent: function(elem, parentElem) {
+    propertyIsLessThan : function (elem, cssProperty, value) {
+      if (!this.isjQuery(elem)) {
+        elem = $(elem);
+      }
+      var is = false;
+      if (elem.css(cssProperty) < value) {
+        is = true;
+      }
+      return is;      	
+    },
+
+    propertyIsGreaterThan : function (elem, cssProperty, value) {
+      if (!this.isjQuery(elem)) {
+        elem = $(elem);
+      }
+      var is = false;
+      if (elem.css(cssProperty) > value) {
+        is = true;
+      }
+      return is;      	
+    },
+
+    doesExistInParent: function (elem, parentElem) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
