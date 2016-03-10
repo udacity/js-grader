@@ -512,19 +512,7 @@ var Grader = (function() {
       return hasCorrectStyle;
     },
 
-    hasStyleOtherThan : function (elem, cssProperty, incorrectStyle) {
-      if (!this.isjQuery(elem)) {
-        elem = $(elem);
-      }
-      var hasStyleOtherThan = false;
-      var currentStyle = elem.css(cssProperty);
-      if (currentStyle != incorrectStyle) {
-      	return true;
-      }
-      return hasStyleOtherThan;
-    },
-
-    isPropertyLessThan : function (elem, cssProperty, value) {
+    propertyIsLessThan : function (elem, cssProperty, value) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
@@ -535,7 +523,7 @@ var Grader = (function() {
       return is;      	
     },
 
-    isPropertyGreaterThan : function (elem, cssProperty, value) {
+    propertyIsGreaterThan : function (elem, cssProperty, value) {
       if (!this.isjQuery(elem)) {
         elem = $(elem);
       }
